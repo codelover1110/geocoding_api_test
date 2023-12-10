@@ -59,6 +59,7 @@ Change the Google Map API key to your own key by updating `/coding_challenge/set
     "lat": "",
     "lng": ""
   }
+![Screenshot](images/reverseGeocode.png)
 
 ### 3. Calculate Geometric Distance
 
@@ -80,3 +81,8 @@ Change the Google Map API key to your own key by updating `/coding_challenge/set
     "distance_m": "",
     "distance_miles": ""
   }
+![Screenshot](images/calculateGeometricDistance.png)
+
+### 4. TestCase
+![Screenshot](images/testCase.png)
+

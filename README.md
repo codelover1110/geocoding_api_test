@@ -39,6 +39,7 @@ Change the Google Map API key to your own key by updating `/coding_challenge/set
     "lat": "",
     "lng": ""
   }
+![Screenshot](images/getGeocode.png)
 
 ### 2. Reverse Geocode
 

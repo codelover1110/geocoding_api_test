@@ -24,6 +24,7 @@ Change the Google Map API key to your own key by updating `/coding_challenge/set
 
 ### 1. Get Geocode
 
+- **URL:** /api/getGeocode/
 - **Method:** POST
 - **Description:** Get geocoding for an address
 - **Params:**
@@ -41,6 +42,7 @@ Change the Google Map API key to your own key by updating `/coding_challenge/set
 
 ### 2. Reverse Geocode
 
+- **URL:** /api/reverseGeocode/
 - **Method:** POST
 - **Description:** Look up an address with reverse geocoding
 - **Params:**
@@ -59,6 +61,7 @@ Change the Google Map API key to your own key by updating `/coding_challenge/set
 
 ### 3. Calculate Geometric Distance
 
+- **URL:** /api/calculateGeometricDistance/
 - **Method:** POST
 - **Description:** Calculates the geometric distance between two lat/long coordinates and returns the distance
 - **Params:**

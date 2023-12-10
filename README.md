@@ -2,14 +2,6 @@
 
 Welcome to the Geocoding API service! This service provides endpoints for geocoding and reverse geocoding, as well as calculating geometric distances between coordinates.
 
-## Getting Started
-
-### Site Test URL
-
-Visit the following URL to test the site:
-
-[Geocoding API Test](http://149.28.86.112:8000/)
-
 ### Configuration
 
 Change the Google Map API key to your own key by updating `/coding_challenge/settings.py`.

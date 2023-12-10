@@ -8,7 +8,7 @@ Welcome to the Geocoding API service! This service provides endpoints for geocod
 
 Visit the following URL to test the site:
 
-[Geocoding API Test Site](http://149.28.86.112:8000/)
+[Geocoding API Test](http://149.28.86.112:8000/)
 
 ### Configuration
 

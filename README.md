@@ -1,53 +1,78 @@
-Site test url: http://149.28.86.112:8000/
+# Geocoding API Service
 
-I) Change the Google Map API key to your key at /coding_challenge/settings.py
+Welcome to the Geocoding API service! This service provides endpoints for geocoding and reverse geocoding, as well as calculating geometric distances between coordinates.
 
-GOOGLE_MAP_API_KEY = 'AIzaSyBIgOmdnklqb-xOCNLb1A8Hb9ju911KO0M'
+## Getting Started
 
-II) Endpoints
+### Site Test URL
 
-1) /api/getGeocode/
-Method: POST
-Description: get geocoding for an address
-Params:
-    + address: Geocoding an address
+Visit the following URL to test the site:
 
-HTTP status:
-    200: The geometry location with latitude and longitude togheter with corressponding formatted address
-    400: Malformed request
+[Geocoding API Test Site](http://149.28.86.112:8000/)
 
-Format Output:
-    {'formatted_address': <address with formated string>, 'lat': <latitude number>, 'lng': <longitude number>}
+### Configuration
 
+1. Change the Google Map API key to your own key by updating `/coding_challenge/settings.py`.
 
-2) /api/reverseGeocode/
-Method: POST
-Description: Look up an address with reverse geocoding
-Params:
-    + lat: Geometry location latitude
-    + lng: Geometry location longitude
+    ```python
+    # /coding_challenge/settings.py
+    
+    GOOGLE_MAP_API_KEY = 'YOUR_GOOGLE_MAP_API_KEY'
+    ```
 
-HTTP status:
-    200: The formatted address with the given geometry in latitude and longitude
-    400: Malformed request
+## Endpoints
 
-Format Output:
-    {'formatted_address': <address with formated string>, 'lat': <latitude number>, 'lng': <longitude number>}
+### 1. Get Geocode
 
-3) /api/calculateGeometricDistance/
-Method: POST
-Description: Calculates the geometric distance in units of your choice between two lat/long coordinates, and return the distance
-Params:
-    + lat_1: Latitude of coordinate 1
-    + lng_1: Longitude of coordinate 1
-    + lat_2: Latitude of coordinate 2
-    + lng_2: Longitude of coordinate 2
+- **Method:** POST
+- **Description:** Get geocoding for an address
+- **Params:**
+  - `address`: Geocoding an address
+- **HTTP Status:**
+  - `200`: The geometry location with latitude and longitude together with the corresponding formatted address
+  - `400`: Malformed request
+- **Format Output:**
+  ```json
+  {
+    "formatted_address": "",
+    "lat": "",
+    "lng": ""
+  }
 
-HTTP status:
-    200: The distance between coordinate (lat_1, lng_1) and coordinate (lat_2, lng_2)
-    400: Malformed request
+### 2. Reverse Geocode
 
-Format Output:
-    {'distance_km': <distance in km unit>,
-    'distance_m': <distance in metter unit>,
-    'distance_miles': <distance in miles unit>}
+- **Method:** POST
+- **Description:** Look up an address with reverse geocoding
+- **Params:**
+  - `lat`: Geometry location latitude
+  - `lng`: Geometry location longitude
+- **HTTP Status:**
+  - `200`: The formatted address with the given geometry in latitude and longitude
+  - `400`: Malformed request
+- **Format Output:**
+  ```json
+  {
+    "formatted_address": "",
+    "lat": "",
+    "lng": ""
+  }
+
+### 3. Calculate Geometric Distance
+
+- **Method:** POST
+- **Description:** Calculates the geometric distance between two lat/long coordinates and returns the distance
+- **Params:**
+  - `lat_1`: Latitude of coordinate 1
+  - `lng_1`: Longitude of coordinate 1
+  - `lat_2`: Latitude of coordinate 2
+  - `lng_2`: Longitude of coordinate 2
+- **HTTP Status:**
+  - `200`: The distance between coordinate (lat_1, lng_1) and coordinate (lat_2, lng_2)
+  - `400`: Malformed request
+- **Format Output:**
+  ```json
+  {
+    "distance_km": "",
+    "distance_m": "",
+    "distance_miles": ""
+  }

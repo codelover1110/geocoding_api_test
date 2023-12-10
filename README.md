@@ -12,7 +12,7 @@ Visit the following URL to test the site:
 
 ### Configuration
 
-1. Change the Google Map API key to your own key by updating `/coding_challenge/settings.py`.
+Change the Google Map API key to your own key by updating `/coding_challenge/settings.py`.
 
     ```python
     # /coding_challenge/settings.py

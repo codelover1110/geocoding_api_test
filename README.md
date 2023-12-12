@@ -59,6 +59,9 @@ Change the Google Map API key to your own key by updating `/coding_challenge/set
 - **Method:** POST
 - **Description:** Calculates the geometric distance between two lat/long coordinates and returns the distance
 - **Params:**
+  - `start_address`: The start address
+  - `destination_address`: The destination_address
+  or
   - `lat_1`: Latitude of coordinate 1
   - `lng_1`: Longitude of coordinate 1
   - `lat_2`: Latitude of coordinate 2
@@ -67,12 +70,21 @@ Change the Google Map API key to your own key by updating `/coding_challenge/set
   - `200`: The distance between coordinate (lat_1, lng_1) and coordinate (lat_2, lng_2)
   - `400`: Malformed request
 - **Format Output:**
+   ```json
+  {
+    "distance": "",
+  }
+
+  or
+
   ```json
   {
     "distance_km": "",
     "distance_m": "",
     "distance_miles": ""
   }
+![Screenshot](images/getGeocodeWithaddress.png)
+
 ![Screenshot](images/calculateGeometricDistance.png)
 
 ### 4. TestCase

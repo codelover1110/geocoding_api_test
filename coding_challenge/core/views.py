@@ -6,6 +6,9 @@ import googlemaps
 from drf_spectacular.utils import extend_schema, OpenApiResponse, OpenApiParameter, extend_schema_view, inline_serializer
 from rest_framework.response import Response
 import geopy.distance
+from coding_challenge.core.models import Geocode
+from coding_challenge.core.serializers import GeoCodeSerializer
+from django.db.models import Q
 
 gmaps = googlemaps.Client(key=settings.GOOGLE_MAP_API_KEY)
 
@@ -27,15 +30,27 @@ class GetGeocodeView(APIView):
   def post(self, request, format=None):
     try:
       address =request.data.get('address')
-      geocode_result = gmaps.geocode(address)
-      data = []
-      for geocode_result_item in geocode_result:
-        data.append({
-          'formatted_address': geocode_result_item['formatted_address'],
-          'lat': geocode_result_item['geometry']['location']['lat'],
-          'lng': geocode_result_item['geometry']['location']['lng'],
-        })
-      return Response(data=data[0], status=status.HTTP_200_OK)
+      # check if address is already in database
+      geocode = GeoCode.object.filter(address=address).first()
+      if geocode is None:
+        geocode_result = gmaps.geocode(address)
+
+        return_geocode = None
+        # store all geo code returned from api
+        for geocode_result_item in geocode_result:
+          geocode_in_loop = GeoCode.object.filter(address=address).first()
+          if geocode_in_loop is None:
+            geocode_in_loop = Geocode.objects.create(
+              formatted_address=geocode_result_item['formatted_address'],
+              lat=geocode_result_item['geometry']['location']['lat'],
+              lng=geocode_result_item['geometry']['location']['lng'],
+            )
+          if return_geocode is None:
+            return_geocode = geocode_in_loop
+
+        return Response(data=GeoCodeSerializer(return_geocode).data, status=status.HTTP_200_OK)
+      else:
+        return Response(data=GeoCodeSerializer(geocode).data, status=status.HTTP_200_OK)
     except Exception as e:
       return Response(data={'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -58,15 +73,28 @@ class ReverseGeocodeView(APIView):
     try:
       lat =request.data.get('lat')
       lng =request.data.get('lng')
-      reverse_geocode_result = gmaps.reverse_geocode((lat, lng))
-      data = []
-      for reverse_geocode_result_item in reverse_geocode_result:
-        data.append({
-          'formatted_address': reverse_geocode_result_item['formatted_address'],
-          'lat': reverse_geocode_result_item['geometry']['location']['lat'],
-          'lng': reverse_geocode_result_item['geometry']['location']['lng'],
-        })
-      return Response(data=data[0], status=status.HTTP_200_OK)
+
+      # check if address is already in database
+      geocode = GeoCode.object.filter(Q(lat=lat) & Q(lng=lng)).first()
+      if geocode is None:
+        reverse_geocode_result = gmaps.reverse_geocode((lat, lng))
+        data = []
+        for reverse_geocode_result_item in reverse_geocode_result:
+          lat = reverse_geocode_result_item['geometry']['location']['lat']
+          lng = reverse_geocode_result_item['geometry']['location']['lng']
+          geocode_in_loop = GeoCode.object.filter(Q(lat=lat) & Q(lng=lng)).first()
+          if geocode_in_loop is None:
+            geocode_in_loop = Geocode.objects.create(
+              formatted_address=reverse_geocode_result_item['formatted_address'],
+              lat=lat,
+              lng=lng,
+            )
+          if return_geocode is None:
+            return_geocode = geocode_in_loop
+
+        return Response(data=GeoCodeSerializer(return_geocode).data, status=status.HTTP_200_OK)
+      else:
+        return Response(data=GeoCodeSerializer(geocode).data, status=status.HTTP_200_OK)
     except Exception as e:
       return Response(data={'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 

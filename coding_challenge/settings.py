@@ -78,12 +78,17 @@ WSGI_APPLICATION = 'coding_challenge.wsgi.application'
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.contrib.gis.db.backends.postgres",
+        "ENGINE": "django.contrib.gis.db.backends.postgis",
         "NAME": os.environ["DBNAME"],
         "USER": os.environ["USER"],
         "PASSWORD": os.environ["PASS"],
         "HOST": os.environ["HOST"],
         "PORT": os.environ["PORT"],
+        "OPTIONS": {"options": "-c search_path=public"},
+        "CONN_MAX_AGE": 60,
+        "TEST": {
+            "TEMPLATE": "template_postgis",
+        },
     },
 }
 

@@ -31,6 +31,7 @@ class GetGeocodeView(APIView):
     try:
       address =request.data.get('address')
       # check if address is already in database
+      # we're using .first() to retrieve only the first matching record. This is efficient because we only need one result.
       geocode = GeoCode.object.filter(address=address).first()
       if geocode is None:
         geocode_result = gmaps.geocode(address)
@@ -75,6 +76,7 @@ class ReverseGeocodeView(APIView):
       lng =request.data.get('lng')
 
       # check if address is already in database
+      # we're using .first() to retrieve only the first matching record. This is efficient because we only need one result.
       geocode = GeoCode.object.filter(Q(lat=lat) & Q(lng=lng)).first()
       if geocode is None:
         reverse_geocode_result = gmaps.reverse_geocode((lat, lng))

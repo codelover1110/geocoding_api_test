@@ -122,15 +122,37 @@ class CalculateGeometricDistanceView(APIView):
       lng_1 = request.data.get('lng_1')
       lat_2 = request.data.get('lat_2')
       lng_2 = request.data.get('lng_2')
-      coords_1 = (lat_1, lng_1)
-      coords_2 = (lat_2, lng_2)
-      distance = geopy.distance.geodesic(coords_1, coords_2)
+      start_address = request.data.get('start_address')
+      destination_address = request.data.get('destination_address')
 
-      data = {
-        'distance_km': distance.km,
-        'distance_m': distance.m,
-        'distance_miles': distance.miles,
-      }
-      return Response(data=data, status=status.HTTP_200_OK)
+      if start_address and destination_address:
+        # Make Google Maps API request to get distance details
+        directions_result = gmaps.directions(start_address, destination_address, mode="driving")
+
+        if not directions_result:
+            return Response({'error': 'Unable to calculate distance.'}, status=500)
+
+        # Extract distance from the API response
+        distance = directions_result[0]['legs'][0]['distance']['text']
+
+        return Response({'distance': distance}, status=200)
+      
+      elif lat_1 and lng_1 and lat_2 and lng_2:
+        coords_1 = (lat_1, lng_1)
+        coords_2 = (lat_2, lng_2)
+
+        # Make Google Maps API request to get distance details
+        distance = geopy.distance.geodesic(coords_1, coords_2)
+
+        data = {
+          'distance_km': distance.km,
+          'distance_m': distance.m,
+          'distance_miles': distance.miles,
+        }
+        return Response(data=data, status=status.HTTP_200_OK)
+      
+      else:
+        return Response({'error': 'Both start and destination addresses are required.'}, status=400)
+      
     except Exception as e:
       return Response(data={'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)

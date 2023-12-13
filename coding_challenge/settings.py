@@ -76,6 +76,7 @@ WSGI_APPLICATION = 'coding_challenge.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+#  PostGIS adds support for geographic objects and spatial indexing. This was chosen over backends.postgresql for that reason
 DATABASES = {
     "default": {
         "ENGINE": "django.contrib.gis.db.backends.postgis",

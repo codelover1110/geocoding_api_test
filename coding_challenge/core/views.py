@@ -17,8 +17,7 @@ gmaps = googlemaps.Client(key=settings.GOOGLE_MAP_API_KEY)
 class GetGeocodeView(APIView):
 
   @extend_schema(
-    description="""Geocoding an address
-""",
+    description="""Geocoding an address""",
     parameters=[
         OpenApiParameter(name='address', required=True, type=str, description='Geocoding an address'),
     ],
@@ -59,8 +58,7 @@ class GetGeocodeView(APIView):
 # Look up an address with reverse geocoding
 class ReverseGeocodeView(APIView):
   @extend_schema(
-    description="""Look up an address with reverse geocoding
-""",
+    description="""Look up an address with reverse geocoding""",
     parameters=[
         OpenApiParameter(name='lat', required=True, type=str, description='Geometry location latitude'),
         OpenApiParameter(name='lng', required=True, type=str, description='Geometry location longitude'),
@@ -103,8 +101,7 @@ class ReverseGeocodeView(APIView):
 
 class CalculateGeometricDistanceView(APIView):
   @extend_schema(
-    description="""Calculates the geometric distance in units of your choice between two lat/long coordinates, and return the distance
-""",
+    description="""Calculates the geometric distance in units of your choice between two lat/long coordinates, and return the distance""",
     parameters=[
         OpenApiParameter(name='lat_1', required=True, type=str, description='Latitude of coordinate 1'),
         OpenApiParameter(name='lng_1', required=True, type=str, description='Longitude of coordinate 1'),
